@@ -1,5 +1,4 @@
 'use client'
-import { Cover } from "@/components/ui/cover";
 import {SparklesCore} from "@/components/ui/sparkles";
 import { useState, useEffect } from "react";
 

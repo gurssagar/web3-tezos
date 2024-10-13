@@ -4,11 +4,10 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 import {
     NavigationMenu,
-    NavigationMenuContent,
+
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
