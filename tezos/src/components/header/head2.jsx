@@ -393,10 +393,9 @@ export function GlobeDemo() {
             color: colors[Math.floor(Math.random() * (colors.length - 1))],
         },
     ];
-
     return (
-        <div className="flex flex-row items-center justify-center py-20 h-screen md:h-auto dark:bg-black bg-white relative w-full">
-            <div className="flex  mx-auto w-full relative overflow-hidden h-full md:h-[40rem] px-4">
+        <div className="flex flex-col lg:flex-row items-center justify-center py-10 lg:py-20 min-h-screen lg:h-auto dark:bg-black bg-white relative w-full">
+            <div className="flex px-20 flex-col-reverse lg:flex  lg:mx-auto w-full relative overflow-hidden h-full md:h-[40rem] lg:px-4">
                 <motion.div
                     initial={{
                         opacity: 0,
@@ -409,7 +408,7 @@ export function GlobeDemo() {
                     transition={{
                         duration: 1,
                     }}
-                    className="div w-1/2 align-middle"
+                    className="div lg:w-1/2 align-middle"
                 >
                     <h1 className=" text-5xl font-bold py-10 text-neutral-700 dark:text-neutral-200 max-w-xl mt-2 mx-auto">What
                         is GitFund ?</h1>
@@ -424,7 +423,7 @@ export function GlobeDemo() {
                         innovation, and growth in the global developer ecosystem, bridging the gap between open-source
                         contributions and blockchain technology. </p>
                     <button
-                        className="relative mx-40 my-10 inline-flex h-12 w-40  overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+                        className="relative  lg:mx-40 my-10 inline-flex h-12 w-40  overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
                         <span
                             className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]"/>
                         <span
@@ -433,7 +432,7 @@ export function GlobeDemo() {
                         </span>
                     </button>
                 </motion.div>
-                <div className=" w-1/2 -bottom-20 h-72 md:h-full z-10">
+                <div className=" lg:w-1/2 -bottom-20 h-72 md:h-full z-10">
                     <World data={sampleArcs} globeConfig={globeConfig}/>
                 </div>
             </div>
