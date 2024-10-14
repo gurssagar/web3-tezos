@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
 
-export function AppleCardsCarouselDemo(props) {
+export function AppleCardsCarouselDemo() {
     return (
         <>
             <div className="dark:bg-black flex flex-col items-center">

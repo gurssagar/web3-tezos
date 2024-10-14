@@ -13,6 +13,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Icon } from '@iconify/react';
 import { useEffect, useState } from "react";
+import {signIn} from "next-auth/react";
 
 export default function Menu() {
     const [mounted, setMounted] = useState(false);
@@ -57,11 +58,11 @@ export default function Menu() {
                 <NavigationMenu>
                     <NavigationMenuList className="flex gap-4 items-center">
                     <NavigationMenuItem>
-                            <Link href="/sign-in" legacyBehavior passHref>
-                                <NavigationMenuLink className="text-white hover:text-gray-300">
-                                    Sign In
+                            <Button onClick={() => signIn("github")}>
+                                <NavigationMenuLink className="text-black hover:text-gray-900">
+                                     Sign In
                                 </NavigationMenuLink>
-                            </Link>
+                            </Button>
                         </NavigationMenuItem>
                         <Button
                             variant="ghost"
