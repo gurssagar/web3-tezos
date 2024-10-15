@@ -9,9 +9,9 @@ export function AppleCardsCarouselDemo() {
                 <h1 className="text-4xl mt-20 mb-10 lg:text-6xl font-semibold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-800 via-neutral-700 to-neutral-700 dark:from-neutral-800 dark:via-white dark:to-white">
                     Key Features
                 </h1>
-                <div className="flex flex-col lg:flex-row lg:flex-wrap justify-center items-center gap-6">
+                <div className="flex flex-col lg:flex-row lg:flex-wrap justify-center items-center gap-6 px-4">
                     {data.map((item, index) => (
-                        <div key={index} className="bg-white dark:bg-[#171717] text-slate-800 dark:text-white flex flex-col my-6 shadow-sm border border-slate-200 dark:border-neutral-800 rounded-lg w-96">
+                        <div key={index} className="bg-white dark:bg-[#171717] text-slate-800 dark:text-white flex flex-col my-6 shadow-sm border border-slate-200 dark:border-neutral-800 rounded-lg w-full sm:w-80">
                             <div className="p-4">
                                 <h6 className="mb-2 text-xl font-semibold">
                                     {item.category}

@@ -65,21 +65,21 @@ export default function Menu() {
                     <NavigationMenu>
                         <NavigationMenuList className="flex gap-4 items-center">
                             <NavigationMenuItem>
-                                <Button onClick={() => signIn("github")}>
-                                    <NavigationMenuLink className="text-black hover:text-gray-900">
+                                <Button className={`bg-white`} onClick={() => signIn("github")}>
+                                    <NavigationMenuLink className="text-black  hover:text-gray-900">
                                         Sign In
                                     </NavigationMenuLink>
                                 </Button>
                             </NavigationMenuItem>
                             <Button
-                                variant="ghost"
+
                                 size="icon"
                                 onClick={toggleTheme}
                             >
                                 {theme === "dark" ? (
                                     <Icon icon="solar:sun-bold" width="24" height="24" />
                                 ) : (
-                                    <Icon icon="line-md:moon-filled" width="24" height="24" />
+                                    <Icon icon="line-md:moon-twotone" width="24" height="24"  style={{color: `white`}} />
                                 )}
                             </Button>
                         </NavigationMenuList>
@@ -100,22 +100,22 @@ export default function Menu() {
 
             {/* Mobile Menu */}
             {mobileMenuOpen && (
-                <div className="md:hidden fixed top-0 left-0 w-64 h-full bg-black p-4 z-50 transform transition-transform duration-300 ease-in-out" style={{ transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-100%)' }}>
+                <div className="md:hidden fixed  pt-10 top-0 left-0 w-64 h-full bg-black p-4 z-50 transform transition-transform duration-300 ease-in-out" style={{ transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-100%)' }}>
                     <NavigationMenu>
-                        <NavigationMenuList className="flex flex-col gap-4">
+                        <NavigationMenuList className="block flex-col space-y-2">
                             <NavigationMenuItem>
-                                <NavigationMenuLink className="text-white hover:text-gray-300">Features</NavigationMenuLink>
+                                <NavigationMenuLink href="#features" className="text-left text-white hover:text-gray-300">Features</NavigationMenuLink>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
-                                <Link href="#features" legacyBehavior passHref>
-                                    <NavigationMenuLink className="text-white hover:text-gray-300">
+                                <Link href="#how" legacyBehavior passHref>
+                                    <NavigationMenuLink className="text-white text-left hover:text-gray-300">
                                         How it Works
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Button onClick={() => signIn("github")} className="w-full">
-                                    <NavigationMenuLink className="text-black hover:text-gray-900">
+                                    <NavigationMenuLink className="text-black text-left hover:text-gray-900">
                                         Sign In
                                     </NavigationMenuLink>
                                 </Button>
