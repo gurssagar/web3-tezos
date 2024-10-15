@@ -6,7 +6,7 @@ import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
 export function AppleCardsCarouselDemo() {
     return (
         <>
-            <div className="dark:bg-black flex flex-col items-center">
+            <div id={`#features`} className="dark:bg-black flex flex-col items-center">
                 <h1 className="text-4xl mt-20 mb-10 lg:text-6xl font-semibold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-800 via-neutral-700 to-neutral-700 dark:from-neutral-800 dark:via-white dark:to-white">
                     Key Features
                 </h1>

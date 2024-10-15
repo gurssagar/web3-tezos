@@ -21,7 +21,7 @@ export function TypewriterEffectSmoothDemo() {
     ];
     return (
         <>
-            <div className="dark:bg-black flex flex-col items-center justify-center   ">
+            <div className="dark:bg-black pb-20 flex flex-col items-center justify-center   ">
                 <button className="  py-30 p-4 rounded-3xl bg-gray-100 dark:bg-[#171717]  ">
                     The road to freedom starts from here
                 </button>
@@ -40,33 +40,7 @@ export function TypewriterEffectSmoothDemo() {
                 </div>
 
             </div>
-            <div className=" w-screen dark:bg-black ">
 
-
-                <footer className="mt-8  p-4 flex items-center justify-between bg-gray-200 dark:bg-[#1f1f1f] rounded-lg">
-                    <div className="mx-20 flex items-center">
-                        <Image src={"/image(1).webp"} alt={"Logo"} width={200} height={50}/>
-                    </div>
-                    <nav>
-                        <ul className="flex mx-20 space-x-4">
-                            <li>
-                                <a href="https://github.com/your-github-username" target="_blank"
-                                   rel="noopener noreferrer"
-                                   className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200">
-                                    GitHub
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.linkedin.com/in/your-linkedin-profile" target="_blank"
-                                   rel="noopener noreferrer"
-                                   className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200">
-                                    LinkedIn
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </footer>
-            </div>
 
         </>
 
