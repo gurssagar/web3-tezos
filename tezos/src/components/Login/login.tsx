@@ -116,7 +116,7 @@ export function SignupFormDemo() {
                     {githubUser && (
                         <div className="mt-4 p-4 bg-green-100 dark:bg-green-900 rounded-md">
                             <p className="text-green-800 dark:text-green-200">
-                                Logged in as: {githubUser.login}
+                                Logged in as: {githubUser}
                             </p>
                         </div>
                     )}

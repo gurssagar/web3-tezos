@@ -4,9 +4,11 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { useMotionTemplate, useMotionValue, motion } from "framer-motion";
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
-
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    // Custom properties can be added here in the future
+    _brand?: 'InputProps';
+}
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
     const radius = 100; // change this to increase the rdaius of the hover effect
