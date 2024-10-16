@@ -11,15 +11,16 @@ import {
     IconBrandOnlyfans,
 } from "@tabler/icons-react";
 import Image from "next/image";
-
+import 'dotenv/config';
 export function SignupFormDemo() {
     const [githubUser, setGithubUser] = useState(null);
 
-    const handleGithubLogin = () => {
-        const clientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
+    const handleGithubLogin = async () => {
+        const clientId = process.env.AUTH_GITHUB_ID;
         const redirectUri = encodeURIComponent(`${window.location.origin}/api/github-callback`);
         const scope = 'user';
-        const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
+
+        const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=Ov23liYe2P4o4RO7y4No&redirect_uri=${redirectUri}&scope=${scope}`;
 
         window.location.href = githubAuthUrl;
     };

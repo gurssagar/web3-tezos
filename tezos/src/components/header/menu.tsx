@@ -12,12 +12,14 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Icon } from '@iconify/react';
 import { useEffect, useState } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import type { Session } from "next-auth";
 
 export default function Menu() {
-    const [mounted, setMounted] = useState(false);
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [mounted, setMounted] = useState<boolean>(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
     const { theme, setTheme } = useTheme();
+    const { data: session } = useSession() as { data: Session | null };
 
     useEffect(() => {
         setMounted(true);
@@ -60,19 +62,58 @@ export default function Menu() {
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
+                            <NavigationMenuItem>
+                                <Link href="/menu" legacyBehavior passHref>
+                                    <NavigationMenuLink className="text-white hover:text-gray-300">
+                                        Menu
+                                    </NavigationMenuLink>
+                                </Link>
+                            </NavigationMenuItem>
+                            {session && (
+                                <NavigationMenuItem>
+                                    <Link href="/Dashboard" legacyBehavior passHref>
+                                        <NavigationMenuLink className="text-white hover:text-gray-300">
+                                            Dashboard
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                            )}
                         </NavigationMenuList>
                     </NavigationMenu>
                     <NavigationMenu>
                         <NavigationMenuList className="flex gap-4 items-center">
-                            <NavigationMenuItem>
-                                <Button className={`bg-white`} onClick={() => signIn("github")}>
-                                    <NavigationMenuLink className="text-black  hover:text-gray-900">
-                                        Sign In
-                                    </NavigationMenuLink>
-                                </Button>
-                            </NavigationMenuItem>
+                            {session ? (
+                                <>
+                                    <NavigationMenuItem>
+                                        <Image
+                                            src={session.user?.image || ""}
+                                            alt={session.user?.name || "User"}
+                                            width={32}
+                                            height={32}
+                                            className="rounded-full"
+                                        />
+                                    </NavigationMenuItem>
+                                    <NavigationMenuItem>
+                                        <span className="text-white">{session.user?.name}</span>
+                                    </NavigationMenuItem>
+                                    <NavigationMenuItem>
+                                        <Button className={`bg-white`} onClick={() => signOut()}>
+                                            <NavigationMenuLink className="text-black  hover:text-gray-900">
+                                                Sign Out
+                                            </NavigationMenuLink>
+                                        </Button>
+                                    </NavigationMenuItem>
+                                </>
+                            ) : (
+                                <NavigationMenuItem>
+                                    <Button className={`bg-white`} onClick={() => signIn("github")}>
+                                        <NavigationMenuLink className="text-black  hover:text-gray-900">
+                                            Sign In
+                                        </NavigationMenuLink>
+                                    </Button>
+                                </NavigationMenuItem>
+                            )}
                             <Button
-
                                 size="icon"
                                 onClick={toggleTheme}
                             >
@@ -114,12 +155,52 @@ export default function Menu() {
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
-                                <Button onClick={() => signIn("github")} className="w-full">
-                                    <NavigationMenuLink className="text-black text-left hover:text-gray-900">
-                                        Sign In
+                                <Link href="/menu" legacyBehavior passHref>
+                                    <NavigationMenuLink className="text-white text-left hover:text-gray-300">
+                                        Menu
                                     </NavigationMenuLink>
-                                </Button>
+                                </Link>
                             </NavigationMenuItem>
+                            {session && (
+                                <NavigationMenuItem>
+                                    <Link href="/dashboard" legacyBehavior passHref>
+                                        <NavigationMenuLink className="text-white text-left hover:text-gray-300">
+                                            Dashboard
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                            )}
+                            {session ? (
+                                <>
+                                    <NavigationMenuItem>
+                                        <Button onClick={() => signOut()} className="w-full">
+                                            <NavigationMenuLink className="text-black text-left hover:text-gray-900">
+                                                Sign Out
+                                            </NavigationMenuLink>
+                                        </Button>
+                                    </NavigationMenuItem>
+                                    <NavigationMenuItem>
+                                        <div className="flex items-center">
+                                            <Image
+                                                src={session.user?.image || ""}
+                                                alt={session.user?.name || "User"}
+                                                width={32}
+                                                height={32}
+                                                className="rounded-full"
+                                            />
+                                            <span className="ml-2 text-white">{session.user?.name}</span>
+                                        </div>
+                                    </NavigationMenuItem>
+                                </>
+                            ) : (
+                                <NavigationMenuItem>
+                                    <Button onClick={() => signIn("github")} className="w-full">
+                                        <NavigationMenuLink className="text-black text-left hover:text-gray-900">
+                                            Sign In
+                                        </NavigationMenuLink>
+                                    </Button>
+                                </NavigationMenuItem>
+                            )}
                             <NavigationMenuItem>
                                 <Button
                                     variant="ghost"

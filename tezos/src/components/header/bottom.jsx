@@ -25,7 +25,7 @@ export function TypewriterEffectSmoothDemo() {
                 <button className="  py-30 p-4 rounded-3xl bg-gray-100 dark:bg-[#171717]  ">
                     The road to freedom starts from here
                 </button>
-                <TypewriterEffectSmooth words={words}/>
+                <TypewriterEffectSmooth  words={words}/>
                 <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4">
 
                     <button

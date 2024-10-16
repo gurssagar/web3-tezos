@@ -2,5 +2,5 @@
 import { signIn } from "next-auth/react"
 
 export default function SignIn() {
-    return
+    return <button onClick={() => signIn("github")}></button>
 }

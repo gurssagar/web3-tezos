@@ -410,9 +410,10 @@ export function GlobeDemo() {
                     }}
                     className="div lg:w-1/2 align-middle"
                 >
-                    <h1 className=" text-5xl font-bold py-10 text-neutral-700 dark:text-neutral-200 max-w-xl mt-2 mx-auto">What
-                        is GitFund ?</h1>
-                    <p className="  text-base md:text-xl font-normal text-neutral-700 dark:text-neutral-200 max-w-xl mt-2 mx-auto">
+                    <h1 className="text-4xl sm:text-5xl font-bold py-10 text-neutral-700 dark:text-neutral-200 max-w-xl mt-2 mx-auto">
+                        What is GitFund ?
+                    </h1>
+                    <p className="text-base sm:text-lg md:text-xl font-normal text-neutral-700 dark:text-neutral-200 max-w-xl mt-2 mx-auto">
                         GitFund is a decentralized platform that transforms GitHub contributions into on-chain rewards.
                         Developers can set bounties, solve issues, and earn cryptocurrency with secure, transparent
                         payouts. The platform integrates a reputation system, allowing top developers to build their
@@ -421,13 +422,17 @@ export function GlobeDemo() {
                         ensuring trust and fairness. Additionally, project owners can seamlessly post tasks, track
                         progress, and reward developers based on contributions. GitFund fosters collaboration,
                         innovation, and growth in the global developer ecosystem, bridging the gap between open-source
-                        contributions and blockchain technology. </p>
+                        contributions and blockchain technology.
+                    </p>
                     <button
-                        className="relative  lg:mx-40 my-10 inline-flex h-12 w-40  overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+                        className="relative lg:mx-40 my-10 inline-flex h-12 w-40 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+                    >
                         <span
-                            className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]"/>
+                            className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]"
+                        />
                         <span
-                            className="inline-flex text-xl h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1  font-medium text-white backdrop-blur-3xl">
+                            className="inline-flex text-base sm:text-lg h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 font-medium text-white backdrop-blur-3xl"
+                        >
                             Know More
                         </span>
                     </button>
