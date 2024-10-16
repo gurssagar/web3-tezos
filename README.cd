@@ -1,0 +1,62 @@
+Tezos Open-Source Contribution Incentive dApp
+
+A decentralized application (dApp) built on the Tezos blockchain to automate payments for GitHub contributors. This project aims to foster a more engaged open-source ecosystem by incentivizing contributors through blockchain-based rewards.
+
+PROBLEM STATEMENT
+  
+Open-source contributions are often under-incentivized, leading to slower adoption and reduced engagement. This dApp automates payments to GitHub contributors once their pull requests (PRs) are successfully merged.
+
+KEY FEATURES
+
+->GitHub Integration: Tracks PRs and merges.
+->Smart Contract Payments: Automatically rewards contributors after a successful merge.
+->Support for Multiple Owners: Both personal and organizational repository owners can set payment rules.
+->Blockchain Benefits: Secure, transparent, and decentralized payments via the Tezos network.
+
+Why Use Tezos?
+
+->Energy Efficiency: Operates on a Proof-of-Stake (PoS) consensus, reducing environmental impact compared to Proof-of-Work (PoW) blockchains.
+
+->Low Transaction Fees: Maintains low and predictable fees, ensuring fair compensation for contributors without high costs.
+
+->Security and Upgradability: Features self-amending governance, allowing seamless upgrades and enhanced security through formal verification of smart contracts.
+
+->Developer-Friendly: Supports multiple programming languages (such as SmartPy), making it accessible for a broad range of developers.
+
+->Strong Community: A vibrant ecosystem that encourages innovation and collaboration, especially for open-source projects.
+
+PROJECT ARCHITECTURE
+
+Frameworks and Technologies Used
+
+->Blockchain Platform: Tezos
+->Smart Contract Language: SmartPy (or another language supported by Tezos)
+->Integration: GitHub API for tracking PRs
+->Frontend: (Include relevant technologies used for the frontend, e.g., React, Angular)
+->Backend: (Mention the backend stack if any, e.g., Node.js, Express)
+
+Installation
+
+->Clone the repository:
+
+git clone https://github.com/gurssagar/tezos-contribution-incentive.git
+cd tezos-contribution-incentive
+
+->Install dependencies:
+
+npm install
+
+->Set up environment variables:
+Create a .env file and add the necessary keys for Tezos and GitHub integration.
+
+->Run the development server:
+npm start
+
+Deploy smart contracts:
+Follow the instructions in the smart-contracts directory for deploying to the Tezos network.
+
+Usage
+
+->Connect your GitHub account to the dApp.
+->Set up payment rules for your repositories (for both personal and organizational repos).
+->Automatic payouts will be made to contributors after successful PR merges.
