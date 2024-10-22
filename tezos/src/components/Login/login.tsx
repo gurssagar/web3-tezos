@@ -32,7 +32,7 @@ export function SignupFormDemo() {
     return (
         <div className={`flex `}>
 
-            <div className="w-1/2  mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-[#0d1117]">
+            <div className="  mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-[#0d1117]">
                 <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
                     Welcome to GitFund
                 </h2>
@@ -123,9 +123,7 @@ export function SignupFormDemo() {
                     )}
                 </form>
             </div>
-            <div className="w-1/2 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
-<Image className={`cover h-screen`} src={`/github-2.jpg`} alt={`github`} height={1000} width={1000}></Image>
-            </div>
+
         </div>
     );
 }
