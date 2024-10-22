@@ -1,11 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { redirect } from './redirect'; // Adjust the import path as necessary
+import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { redirect } from "./redirect"; // Adjust the import path as necessary
 
 const WalletAddressForm: React.FC = () => {
-  const [walletAddress, setWalletAddress] = useState('');
-  const [currentWalletAddress, setCurrentWalletAddress] = useState('');
+  const [walletAddress, setWalletAddress] = useState("");
+  const [currentWalletAddress, setCurrentWalletAddress] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const { data: session } = useSession();
   const router = useRouter();
@@ -14,17 +23,19 @@ const WalletAddressForm: React.FC = () => {
     const fetchUserWallet = async () => {
       if (session?.user?.username) {
         try {
-          const response = await fetch(`http://localhost:3001/api/user/${session.user.username}`);
+          const response = await fetch(
+            `http://localhost:3001/api/user/${session.user.username}`
+          );
           if (response.ok) {
             const userData = await response.json();
             if (userData.walletAddress) {
               setCurrentWalletAddress(userData.walletAddress);
             }
           } else {
-            console.error('Failed to fetch user data');
+            console.error("Failed to fetch user data");
           }
         } catch (error) {
-          console.error('Error fetching user data:', error);
+          console.error("Error fetching user data:", error);
         }
       }
     };
@@ -35,73 +46,97 @@ const WalletAddressForm: React.FC = () => {
     e.preventDefault();
     if (session?.user?.username) {
       try {
-        const response = await fetch('http://localhost:3001/api/update-wallet', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username: session.user.username,
-            walletAddress,
-          }),
-        });
+        const response = await fetch(
+          "http://localhost:3001/api/update-wallet",
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: session.user.username,
+              walletAddress,
+            }),
+          }
+        );
 
         if (response.ok) {
-          console.log('Wallet address updated successfully');
+          console.log("Wallet address updated successfully");
           setCurrentWalletAddress(walletAddress);
-          setWalletAddress('');
+          setWalletAddress("");
           setIsEditing(false);
-          redirect(router, '/');
+          redirect(router, "/");
         } else {
-          console.error('Failed to update wallet address');
+          console.error("Failed to update wallet address");
         }
       } catch (error) {
-        console.error('Error updating wallet address:', error);
+        console.error("Error updating wallet address:", error);
       }
     }
   };
 
   return (
-    <div className="wallet-address-form">
-      {session?.user && (
-        <div className="user-info">
-          <h2 className="user-details-heading">User Details</h2>
-          {session.user.image && (
-            <img
-              src={session.user.image}
-              alt={`${session.user.name || session.user.username}'s profile picture`}
-              className="user-image"
+    <Card className="w-full max-w-md mx-auto bg-zinc-900 text-white">
+      <CardHeader>
+        <CardTitle className="text-2xl">User Details</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {session?.user && (
+          <>
+            {session.user.image && (
+              <img
+                src={session.user.image}
+                alt={`${
+                  session.user.name || session.user.username
+                }'s profile picture`}
+                className="w-16 h-16 rounded-full"
+              />
+            )}
+            <div>
+              <p className="text-sm text-zinc-400">Name</p>
+              <p>{session.user.name || "N/A"}</p>
+            </div>
+            <div>
+              <p className="text-sm text-zinc-400">Username</p>
+              <p>{session.user.username}</p>
+            </div>
+            <div>
+              <p className="text-sm text-zinc-400">Current Wallet Address</p>
+              <p>{currentWalletAddress || "N/A"}</p>
+            </div>
+          </>
+        )}
+        {isEditing && (
+          <div className="space-y-2">
+            <p className="text-sm text-zinc-400">Edit Wallet Address</p>
+            <Input
+              type="text"
+              value={walletAddress}
+              onChange={(e) => setWalletAddress(e.target.value)}
+              placeholder="Enter your new wallet address"
+              required
+              className="bg-zinc-800 border-zinc-700 text-white"
             />
-          )}
-          <p className="user-name">Name: {session.user.name || 'N/A'}</p>
-          <p className="user-username">Username: {session.user.username}</p>
-          <p className="user-wallet-address">
-            Current Wallet Address: {currentWalletAddress || 'N/A'}
-          </p>
-          <button onClick={() => setIsEditing(true)} className="edit-button">
+          </div>
+        )}
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        {isEditing ? (
+          <>
+            <Button onClick={handleSubmit} variant="default">
+              Update Wallet Address
+            </Button>
+            <Button onClick={() => setIsEditing(false)} variant="outline">
+              Cancel
+            </Button>
+          </>
+        ) : (
+          <Button onClick={() => setIsEditing(true)} variant="outline">
             Edit Wallet Address
-          </button>
-        </div>
-      )}
-      {isEditing && (
-        <form onSubmit={handleSubmit} className="update-wallet-form">
-          <input
-            type="text"
-            value={walletAddress}
-            onChange={(e) => setWalletAddress(e.target.value)}
-            placeholder="Enter your new wallet address"
-            required
-            className="wallet-input"
-          />
-          <button type="submit" className="submit-button">
-            Update Wallet Address
-          </button>
-          <button type="button" onClick={() => setIsEditing(false)} className="cancel-button">
-            Cancel
-          </button>
-        </form>
-      )}
-    </div>
+          </Button>
+        )}
+      </CardFooter>
+    </Card>
   );
 };
 
