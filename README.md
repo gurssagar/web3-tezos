@@ -264,12 +264,6 @@ npx hardhat verify --network etherlink DEPLOYED_CONTRACT_ADDRESS
    * Rewards distributed automatically
    * Transaction history available on-chain
 
-## Testing
-
-Run the test suite:
-```bash
-npx hardhat test
-```
 
 ## Contributing
 
