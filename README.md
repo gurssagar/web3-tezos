@@ -21,16 +21,116 @@ Open-source contributions are often under-incentivized, leading to slower adopti
 * **Developer-Friendly**: Supports multiple programming languages including Solidity through Etherlink
 * **Strong Community**: Vibrant ecosystem encouraging innovation and collaboration
 
-## Project Architecture
 
-### Technology Stack
 
-* **Blockchain Platform**: Tezos (Etherlink)
-* **Smart Contract Language**: Solidity
-* **Frontend**: React.js
-* **Backend**: Node.js with Express
-* **Integration**: GitHub API
+# Tezos Open-Source Contribution Incentive dApp
 
+<div align="center">
+  <img src="https://gitcommit-nine.vercel.app/_next/image?url=%2Fimage(1).webp&w=256&q=75"  width="800"/>
+</div>
+
+<div align="center">
+  <a href="https://tezos.com/">
+    <img src="https://1.bp.blogspot.com/-iP9rRbHwFvw/YtLMcLGORrI/AAAAAAAAGbA/5VFuXnEB324S1oDwJ5BRPfC5904VjpxxgCNcBGAsYHQ/w1200-h630-p-k-no-nu/Logo%2BTezos.png" width='80px' alt="Tezos"/>
+  </a>
+  <a href="https://soliditylang.org/">
+    <img src="https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white" alt="Solidity"/>
+  </a>
+  <a href="https://nextjs.org/">
+    <img src="https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js"/>
+  </a>
+  <a href="https://expressjs.com/">
+    <img src="https://img.shields.io/badge/Express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=white" alt="Express.js"/>
+  </a>
+  <a href="https://www.mongodb.com/">
+    <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB"/>
+  </a>
+  <a href="https://hardhat.org/">
+    <img src="https://img.shields.io/badge/Hardhat-F7DF1E?style=for-the-badge&logo=hardhat&logoColor=black" alt="Hardhat"/>
+  </a>
+</div>
+
+<div align="center">
+  <h3>A decentralized application built on Tezos (Etherlink) to automate payments for GitHub contributors</h3>
+</div>
+
+## 🛠️ Technology Stack
+
+| Technology | Version | Description |
+|------------|---------|-------------|
+| Tezos (Etherlink) | Latest | Layer 1 blockchain platform |
+| Solidity | ^0.8.19 | Smart contract development |
+| Next.js | 14.0.0 | Frontend framework |
+| Express.js | ^4.18.2 | Backend framework |
+| MongoDB | ^7.0.0 | Database |
+| Hardhat | ^2.19.0 | Development environment |
+| TypeScript | ^5.0.0 | Programming language |
+| Tailwind CSS | ^3.3.0 | CSS framework |
+
+
+
+## Architecture Overview
+
+
+
+```mermaid
+graph TD
+    A[GitHub Webhook] --> B[Express Backend]
+    B --> C[MongoDB]
+    B --> D[Smart Contract]
+    E[Next.js Frontend] --> B
+    E --> D
+    D --> F[Tezos Blockchain]
+```
+
+## Development Tools
+
+<table>
+  <tr>
+    <td align="center" width="96">
+      <img src="https://techstack-generator.vercel.app/react-icon.svg" width="48" height="48" alt="React" />
+      <br>React
+    </td>
+    <td align="center" width="96">
+      <img src="https://techstack-generator.vercel.app/ts-icon.svg" width="48" height="48" alt="TypeScript" />
+      <br>TypeScript
+    </td>
+    <td align="center" width="96">
+      <img src="https://techstack-generator.vercel.app/js-icon.svg" width="48" height="48" alt="JavaScript" />
+      <br>JavaScript
+    </td>
+    <td align="center" width="96">
+      <img src="https://techstack-generator.vercel.app/nodejs-icon.svg" width="48" height="48" alt="Node.js" />
+      <br>Node.js
+    </td>
+    <td align="center" width="96">
+      <img src="https://techstack-generator.vercel.app/prettier-icon.svg" width="48" height="48" alt="Prettier" />
+      <br>Prettier
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="96">
+      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg" width="48" height="48" alt="MongoDB" />
+      <br>MongoDB
+    </td>
+    <td align="center" width="96">
+      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-plain.svg" width="48" height="48" alt="Tailwind" />
+      <br>Tailwind
+    </td>
+    <td align="center" width="96">
+      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg" width="48" height="48" alt="Docker" />
+      <br>Docker
+    </td>
+    <td align="center" width="96">
+      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/jest/jest-plain.svg" width="48" height="48" alt="Jest" />
+      <br>Jest
+    </td>
+    <td align="center" width="96">
+      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg" width="48" height="48" alt="Git" />
+      <br>Git
+    </td>
+  </tr>
+</table>
 
 ## Smart Contract
 
