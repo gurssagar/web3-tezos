@@ -3,7 +3,7 @@ import React from 'react';
 interface BountyPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  bounty: Bounty | null;
+  bounty: any; // Replace 'any' with the actual type of bounty if known
 }
 
 const BountyPopup: React.FC<BountyPopupProps> = ({ isOpen, onClose, bounty }) => {

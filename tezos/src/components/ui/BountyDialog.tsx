@@ -1,4 +1,11 @@
-import {CreateBountyForm} from "@/components/create-bounty-form";
+import React from 'react';
+import { CreateBountyForm } from "@/components/create-bounty-form";
+
+interface BountyDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+  bounty: any; // Replace 'any' with the actual type of bounty if known
+}
 
 const BountyDialog: React.FC<BountyDialogProps> = ({ isOpen, onClose, bounty }) => {
     if (!isOpen || !bounty) return null;

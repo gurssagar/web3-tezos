@@ -10,7 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { redirect } from "./redirect"; // Adjust the import path as necessary
 
 const WalletAddressForm: React.FC = () => {
   const [walletAddress, setWalletAddress] = useState("");
@@ -21,10 +20,10 @@ const WalletAddressForm: React.FC = () => {
 
   useEffect(() => {
     const fetchUserWallet = async () => {
-      if (session?.user?.username) {
+      if (session?.user?.address) {
         try {
           const response = await fetch(
-            `http://localhost:3001/api/user/${session.user.username}`
+            `http://localhost:3001/api/user/${session.user.address}`
           );
           if (response.ok) {
             const userData = await response.json();
@@ -65,7 +64,6 @@ const WalletAddressForm: React.FC = () => {
           setCurrentWalletAddress(walletAddress);
           setWalletAddress("");
           setIsEditing(false);
-          redirect(router, "/");
         } else {
           console.error("Failed to update wallet address");
         }

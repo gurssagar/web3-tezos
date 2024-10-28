@@ -174,15 +174,7 @@ export default function Menu() {
             <NavigationMenuList className="flex gap-4 items-center">
               {session ? (
                 <>
-                  <NavigationMenuItem>
-                    <Image
-                      src={session.user?.image || ""}
-                      alt={session.user?.name || "User"}
-                      width={32}
-                      height={32}
-                      className="rounded-full"
-                    />
-                  </NavigationMenuItem>
+
                   <NavigationMenuItem>
                     <span className="text-white">{session.user?.name}</span>
                   </NavigationMenuItem>
@@ -297,13 +289,7 @@ export default function Menu() {
                   </NavigationMenuItem>
                   <NavigationMenuItem>
                     <div className="flex items-center">
-                      <Image
-                        src={session.user?.image}
-                        alt={session.user?.name || "User"}
-                        width={32}
-                        height={32}
-                        className="rounded-full"
-                      />
+
                       <span className="ml-2 text-white">
                         {session.user?.name}
                       </span>

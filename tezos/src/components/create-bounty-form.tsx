@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
-import Web3 from "web3";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,6 +14,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { DefaultSession } from "next-auth";
+import Web3 from "web3";
+import { navigationMenuTriggerStyle } from "./ui/navigation-menu";
 
 interface Repo {
   id: number;
@@ -24,13 +25,14 @@ interface Repo {
 
 interface Issue {
   id: number;
-  number: number;
   title: string;
+  number: number;
 }
 
-interface ExtendedSession {
+interface ExtendedSession extends DefaultSession {
   user: {
-    username: string;
+    address: string;
+    username?: string;
   } & DefaultSession["user"];
 }
 
@@ -38,7 +40,6 @@ export function CreateBountyForm() {
   const { data: session } = useSession();
   const [repos, setRepos] = useState<Repo[]>([]);
   const [issues, setIssues] = useState<Issue[]>([]);
-
   const [formData, setFormData] = useState({
     title: "",
     oneLiner: "",
@@ -49,24 +50,27 @@ export function CreateBountyForm() {
     rewardAmount: 0,
     paymentToken: "",
     isLive: false,
+    walletAddress: "",
   });
 
   React.useEffect(() => {
     const fetchRepos = async () => {
-      if (
-        session?.user &&
-        (session.user as ExtendedSession["user"])?.username
-      ) {
-        try {
-          const response = await fetch(
-            `https://api.github.com/users/${
-              (session.user as ExtendedSession["user"]).username
-            }/repos`
-          );
-          const data = await response.json();
-          setRepos(data);
-        } catch (error) {
-          console.error("Error fetching repositories:", error);
+      if (session?.user) {
+        const user = session.user as unknown as ExtendedSession['user'];
+        if (user.username) {
+          try {
+            const response = await fetch(
+              `https://api.github.com/users/${user.username}/repos`
+            );
+            const data = await response.json();
+            setRepos(data);
+          } catch (error: unknown) {
+            if (error instanceof Error) {
+              console.error("Error fetching repositories:", error.message);
+            } else {
+              console.error("Unknown error fetching repositories");
+            }
+          }
         }
       }
     };
@@ -116,30 +120,9 @@ export function CreateBountyForm() {
     if (
       session &&
       session.user &&
-      (session.user as ExtendedSession["user"]).username
+      (session.user as ExtendedSession["user"]).address
     ) {
       try {
-        // Initialize Web3
-        const web3 = new Web3(Web3.givenProvider);
-
-        // Get the active account (Assuming the maintainer is connected via MetaMask or similar)
-        const accounts = await web3.eth.requestAccounts();
-        const account = accounts[0];
-
-        // Get the contract instance
-        const abi = require("../MyContractAbi.json");
-        const contractAddress = "0x850A9fe6E0fb8B631884BE32c93Cfa360d35a6d9";
-        const contract = new web3.eth.Contract(abi, contractAddress);
-
-        // Call the smart contract method to deposit the bounty amount
-        await contract.methods.deposit(formData.rewardAmount).send({
-          from: account,
-          value: web3.utils.toWei(formData.rewardAmount, "ether"),
-        });
-
-        console.log(`Bounty deposited with reward: ${formData.rewardAmount}`);
-
-        // Proceed to save the bounty details in your database
         const response = await fetch("/api/create-bounty", {
           method: "POST",
           headers: {
@@ -147,18 +130,53 @@ export function CreateBountyForm() {
           },
           body: JSON.stringify({
             ...formData,
-            username: (session.user as ExtendedSession["user"]).username,
+            address: (session.user as ExtendedSession["user"]).address,
           }),
         });
-
+        const walletAddress = `0x43A071fa2103F24Bbcd7aD3215b5Ed226484473c`;
         if (response.ok) {
           console.log("Bounty details saved successfully");
-          // Reset form data or redirect as needed
         } else {
           console.error("Failed to save bounty details");
         }
-      } catch (error) {
-        console.error("Error interacting with the smart contract:", error);
+
+        if (window.ethereum) {
+          const web3 = new Web3(window.ethereum);
+
+          try {
+            await window.ethereum.request({ method: "eth_requestAccounts" });
+            const accounts = await web3.eth.getAccounts();
+            const fromAddress = accounts[0];
+
+            const amountInWei = web3.utils.toWei(
+              formData.rewardAmount.toString(),
+              "ether"
+            );
+
+            const tx = {
+              from: fromAddress,
+              to: walletAddress,
+              value: amountInWei,
+              gas: 21000,
+            };
+
+            const transactionHash = await web3.eth.sendTransaction(tx);
+            console.log("Transaction successful with hash:", transactionHash);
+            alert("Transaction successful!");
+
+          } catch (error: unknown) {
+            console.error("Transaction failed", error);
+            if (error instanceof Error) {
+              alert("Transaction failed: " + error.message);
+            } else {
+              alert("Transaction failed: Unknown error");
+            }
+          }
+        } else {
+          alert("Please install MetaMask to complete the transaction.");
+        }
+      } catch (error: unknown) {
+        console.error("Error processing bounty or transaction:", error);
       }
     } else {
       console.error("User session not found");
@@ -173,6 +191,7 @@ export function CreateBountyForm() {
             Create a Bounty
           </h1>
           <form className="space-y-4" onSubmit={handleSubmit}>
+            
             <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
               <div className="w-full sm:w-1/2 space-y-2">
                 <Label htmlFor="title">Title</Label>
@@ -205,149 +224,70 @@ export function CreateBountyForm() {
                 value={formData.description}
                 onChange={handleChange}
               />
-              <div className="flex flex-wrap gap-2">
-                <Button variant="outline" size="sm">
-                  B
-                </Button>
-                <Button variant="outline" size="sm">
-                  I
-                </Button>
-                <Button variant="outline" size="sm">
-                  U
-                </Button>
-                <Button variant="outline" size="sm">
-                  {"<>"}
-                </Button>
-                <Button variant="outline" size="sm">
-                  List
-                </Button>
-                <Button variant="outline" size="sm">
-                  1.
-                </Button>
-                <Button variant="outline" size="sm">
-                  A
-                </Button>
-                <Button variant="outline" size="sm">
-                  #
-                </Button>
-                <Button variant="outline" size="sm">
-                  Link
-                </Button>
-                <Button variant="outline" size="sm">
-                  {"</>"}
-                </Button>
-              </div>
             </div>
             <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
-              <div className="w-full sm:w-1/2 space-y-2">
-                <Label htmlFor="github-repo">GitHub Repo</Label>
-                <Select
-                  name="githubRepo"
-                  value={formData.githubRepo}
-                  onValueChange={(value) => handleChange(value, "githubRepo")}
-                >
-                  <SelectTrigger id="github-repo">
-                    <SelectValue placeholder="Select from one of your repositories" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {repos.map((repo) => (
-                      <SelectItem key={repo.id} value={repo.full_name}>
-                        {repo.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="w-full sm:w-1/2 space-y-2">
-                <Label htmlFor="github-issue">GitHub Issue</Label>
-                <Select
-                  name="githubIssue"
-                  value={formData.githubIssue}
-                  onValueChange={(value) => handleChange(value, "githubIssue")}
-                >
-                  <SelectTrigger id="github-issue">
-                    <SelectValue placeholder="Select the issue from your repository" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {issues.map((issue) => (
-                      <SelectItem
-                        key={issue.id}
-                        value={issue.number.toString()}
-                      >
-                        {issue.title}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+              
               <div className="w-full sm:w-1/3 space-y-2">
-                <Label htmlFor="difficulty">Difficulty</Label>
-                <Select
-                  name="difficulty"
-                  value={formData.difficulty}
-                  onValueChange={(value) => handleChange(value, "difficulty")}
-                >
-                  <SelectTrigger id="difficulty">
-                    <SelectValue placeholder="Select difficulty" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Easy">Easy</SelectItem>
-                    <SelectItem value="Medium">Medium</SelectItem>
-                    <SelectItem value="Hard">Hard</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="w-full sm:w-1/3 space-y-2">
-                <Label htmlFor="rewardAmount">Reward Amount</Label>
+                <Label htmlFor="reward-amount">Reward (in ETH)</Label>
                 <Input
-                  id="rewardAmount"
+                  id="reward-amount"
                   name="rewardAmount"
-                  type="number"
-                  placeholder="1"
+                  placeholder="E.g. 0.1"
                   value={formData.rewardAmount}
                   onChange={handleChange}
+                  type="number"
                 />
               </div>
-              <div className="w-full sm:w-1/3 space-y-2">
-                <Label htmlFor="paymentToken">Native Payment Token</Label>
-                <Input
-                  id="paymentToken"
-                  name="paymentToken"
-                  placeholder="Select a token"
-                  value={formData.paymentToken}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="isLive">Make it Live</Label>
+              <div className="space-y-2 w-1/3">
+              <Label htmlFor="githubRepo">GitHub Repository</Label>
               <Select
-                name="isLive"
-                value={formData.isLive ? "yes" : "no"}
-                onValueChange={(value) =>
-                  handleChange(value === "yes" ? "yes" : "no", "isLive")
-                }
+                onValueChange={(value) => handleChange(value, "githubRepo")}
               >
-                <SelectTrigger id="isLive">
-                  <SelectValue placeholder="Select option" />
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a repository" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="yes">Yes</SelectItem>
-                  <SelectItem value="no">No</SelectItem>
+                  {repos.map((repo) => (
+                    <SelectItem key={repo.id} value={repo.full_name}>
+                      {repo.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex justify-end">
-              <Button type="submit">Continue →</Button>
+            <div className="space-y-2 w-1/3">
+              <Label htmlFor="githubIssue">GitHub Issue</Label>
+              <Select
+                onValueChange={(value) => handleChange(value, "githubIssue")}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select an issue" />
+                </SelectTrigger>
+                <SelectContent>
+                  {issues.map((issue) => (
+                    <SelectItem key={issue.id} value={issue.number.toString()}>
+                      {issue.title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
+            </div>
+            <Button type="submit" className="w-full mt-8" size="lg">
+              Create Bounty
+            </Button>
           </form>
         </div>
-        <div className="w-full lg:w-1/2 lg:block hidden flex justify-center items-center">
-          <DotLottieReact src="/dev.json" loop autoplay />
+        <div className="w-full lg:w-1/2">
+          <DotLottieReact
+            autoplay
+            loop
+            src="dev.lottie"
+            style={{ height: "800px", width: "800px" }}
+          />
         </div>
       </div>
     </div>
   );
 }
+export default CreateBountyForm;
