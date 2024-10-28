@@ -43,7 +43,7 @@ const WalletAddressForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (session?.user?.username) {
+    if (session?.user?.address) {
       try {
         const response = await fetch(
           "http://localhost:3001/api/update-wallet",
@@ -53,7 +53,7 @@ const WalletAddressForm: React.FC = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              username: session.user.username,
+              address: session.user.address,
               walletAddress,
             }),
           }
@@ -85,7 +85,7 @@ const WalletAddressForm: React.FC = () => {
               <img
                 src={session.user.image}
                 alt={`${
-                  session.user.name || session.user.username
+                  session.user.name || session.user.address
                 }'s profile picture`}
                 className="w-16 h-16 rounded-full"
               />
@@ -95,8 +95,8 @@ const WalletAddressForm: React.FC = () => {
               <p>{session.user.name || "N/A"}</p>
             </div>
             <div>
-              <p className="text-sm text-zinc-400">Username</p>
-              <p>{session.user.username}</p>
+              <p className="text-sm text-zinc-400">Address</p>
+              <p>{session.user.address}</p>
             </div>
             <div>
               <p className="text-sm text-zinc-400">Current Wallet Address</p>
